@@ -22,8 +22,22 @@
 		(is (= (sum-squares 2)) 5)
 		(is (= (sum-squares 3)) 11)))
 
-    (deftest duple-test
-    	(testing "duple returns a list of elements repeated n times"
-    		(is (= (duple 2 4)) '(4 4))
+(deftest duple-test
+    (testing "duple returns a list of elements repeated n times"
+    	(is (= (duple 2 4)) '(4 4))
         (is (= (duple 3 '(Blah Blah))) '((Blah Blah) (Blah Blah) (Blah Blah)))
-        (is (= (duple 1 'HA!)) '(HA!))))
+        (is (= (duple 1 'HA!)) '(HA!))
+        (is (= (duple 0 'HA!)) '())))
+
+(deftest invert-test
+    (testing "invert returns a list where each element is a 2 element list witht he elements reversed"
+        (is (= (invert '((1 2) (3 4)))) '((2 1)(4 3)))
+        (is (= (invert '((3 4)))) '((4 3)))
+        (is (= (invert '())) '())))
+
+(deftest down-test
+    (testing "down returns a list of elements where each element is wrapped in a layer of parenthesis"
+        (is (= (down '())) '())
+        (is (= (down '(1))) '((1)))
+        (is (= (down '(1 2 3))) '((1) (2) (3)))
+        (is (= (down '(1 2 (3))) '((1) (2) ((3)))))))
