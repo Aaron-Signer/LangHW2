@@ -24,20 +24,58 @@
 
 (deftest duple-test
     (testing "duple returns a list of elements repeated n times"
-    	(is (= (duple 2 4)) '(4 4))
-        (is (= (duple 3 '(Blah Blah))) '((Blah Blah) (Blah Blah) (Blah Blah)))
-        (is (= (duple 1 'HA!)) '(HA!))
-        (is (= (duple 0 'HA!)) '())))
+    	  (is (= (duple 2 4) '(4 4)))
+        (is (= (duple 3 '(Blah Blah)) '((Blah Blah) (Blah Blah) (Blah Blah))))
+        (is (= (duple 1 'HA!) '(HA!)))
+        (is (= (duple 0 'HA!) '()))))
 
 (deftest invert-test
     (testing "invert returns a list where each element is a 2 element list witht he elements reversed"
-        (is (= (invert '((1 2) (3 4)))) '((2 1)(4 3)))
-        (is (= (invert '((3 4)))) '((4 3)))
+        (is (= (invert '((1 2) (3 4))) '((2 1)(4 3))))
+        (is (= (invert '((3 4))) '((4 3))))
         (is (= (invert '())) '())))
 
 (deftest down-test
     (testing "down returns a list of elements where each element is wrapped in a layer of parenthesis"
-        (is (= (down '())) '())
-        (is (= (down '(1))) '((1)))
-        (is (= (down '(1 2 3))) '((1) (2) (3)))
+        (is (= (down '()) '()))
+        (is (= (down '(1)) '((1))))
+        (is (= (down '(1 2 3)) '((1) (2) (3))))
         (is (= (down '(1 2 (3))) '((1) (2) ((3)))))))
+
+(deftest swapper-test
+  (testing "swapper swaps the first argurment with the second argument and vice versa for each element in the list"
+    (is (= (swapper 'a 'b '( a a b b)) '(b b a a)))
+    (is (= (swapper 'a 'b '((a) a b b)) '((b) b a a)))
+    (is (= (swapper 'a 'b '((a) (a) b b)) '((b) (b) a a)))
+    (is (= (swapper 'a 'b '(a (a) b (b))) '(b (b) a (a))))
+    (is (= (swapper 'a 'd '(a d () c d)) '(d a () c a)))))
+
+(deftest count-occurances-test
+  (testing "count-occurances returns the number of times an element exists in a list and any possible nested list"
+    (is (= (count-occurances 'a '(a b d a a a)) 4))
+    (is (= (count-occurances 'a '((a b a) d a a a)) 4))
+    (is (= (count-occurances 'a '(a b (a d) a a a)) 4))))
+
+(deftest product-test
+  (testing "product returns the cartesian product of two lists"
+    (is (= (product '(a b) '(1 2)) '((a 1) (a 2) (b 1) (b 2))))))
+
+; (deftest create-pair-test
+;   (testing "create-pair takes to arugments and returns a list of the two arguments"
+;     (is (= (create-pair 'a 'b) '(a b)))))
+
+(deftest filter-in-test
+  (testing "filter-in takes a list and type f and returns a list where the elements are only of type f"
+  (is (= (filter-in number? '(a 2 (1 3) b 7)) '(2 7)))
+  (is (= (filter-in number? '(1 2 3 4)) '(1 2 3 4)))))
+
+(deftest list-index-test
+  (testing "returns the first index of the type passed in, or false if not found"
+  (is (= (list-index number? '(a 2 (1 3) b 7)) 1))
+  (is (= (list-index symbol? '(1 2 (a b) 3)) false))
+  (is (= (list-index number? '(a d (1 3) b 7)) 4))))
+
+(deftest my-every?-test
+  (testing "for a given list and pred, return true if every element in the list is of type pred, otherwise return false"
+    (is (= (my-every? number? '(a b c 3 e)) false))
+    (is (= (every? number? '(1 2 3 5 4)) true))))
