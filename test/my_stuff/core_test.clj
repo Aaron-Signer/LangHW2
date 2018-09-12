@@ -53,16 +53,16 @@
 (deftest count-occurances-test
   (testing "count-occurances returns the number of times an element exists in a list and any possible nested list"
     (is (= (count-occurances 'a '(a b d a a a)) 4))
-    (is (= (count-occurances 'a '((a b a) d a a a)) 4))
-    (is (= (count-occurances 'a '(a b (a d) a a a)) 4))))
+    (is (= (count-occurances 'a '((a b a) d a a a)) 5))
+    (is (= (count-occurances 'a '(a b (a d) a a a)) 5))))
 
 (deftest product-test
   (testing "product returns the cartesian product of two lists"
     (is (= (product '(a b) '(1 2)) '((a 1) (a 2) (b 1) (b 2))))))
 
-; (deftest create-pair-test
-;   (testing "create-pair takes to arugments and returns a list of the two arguments"
-;     (is (= (create-pair 'a 'b) '(a b)))))
+(deftest create-pairs-test
+  (testing "create-pairs takes to arugments and returns a list of the two arguments"
+    (is (= (create-pairs 'a '(b)) '((a b))))))
 
 (deftest filter-in-test
   (testing "filter-in takes a list and type f and returns a list where the elements are only of type f"
@@ -79,3 +79,17 @@
   (testing "for a given list and pred, return true if every element in the list is of type pred, otherwise return false"
     (is (= (my-every? number? '(a b c 3 e)) false))
     (is (= (every? number? '(1 2 3 5 4)) true))))
+
+(deftest up-test
+  (testing "for a given list and pred, return true if every element in the list is of type pred, otherwise return false"
+    (is (= (up '((1 2) (3 4))) '(1 2 3 4)))
+    (is (= (up '((x (y)) z)) '(x (y) z)))))
+
+(deftest my-merge-test
+  (testing "for a given list and pred, return true if every element in the list is of type pred, otherwise return false"
+    (is (= (my-merge '(1 4) '(1 2 8)) '(1 1 2 4 8)))
+    (is (= (my-merge '(35 62 81 90 91) '(3 83 85 90)) '(3 35 62 81 83 85 90 90 91)))))
+
+(deftest my-sort-test
+  (testing "for a given list and pred, return true if every element in the list is of type pred, otherwise return false"
+    (is (= (my-sort '(8 2 5 2 3)) '(2 2 3 5 8)))))
